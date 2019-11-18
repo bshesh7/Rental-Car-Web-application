@@ -17,6 +17,14 @@ con.connect(function(err) {
   console.log("Connected!");
 });
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", null); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 app.use(bodyParser.json());
 
 // for parsing application/xwww-
@@ -60,14 +68,26 @@ app.post("/save", (req, res) => {
   }
 });
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", null); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
+
+app.post("/retSelect", (req, res) => {
+  var query3 = "select * from customer where Name like '%"+req.body.searchParam+"%'";
+  fetchDataCollective(query3,function(data) {
+  res.send(data);
+  console.log("Done. Display Data!");
+  });
+
 });
+
+
+function fetchDataCollective(query3, callback) {
+  executeQuery(query3, function(result) {
+    callback(result);
+  });
+}
+
+
+
+
 
 app.get("/ret", function(req, res) {
   fetchData(function(data) {
@@ -76,13 +96,8 @@ app.get("/ret", function(req, res) {
   });
 });
 
-app.post("/retSelect", function(req, res) {
-  var query = "select * from customer where Name like '%"+req.body.searchParam+"%';"
-  fetchDataCollective(query,function(data) {
-    res.send(data);
-    console.log("Done. Display Data!");
-  });
-});
+
+
 
 function executeQuery(sql, cb) {
   con.query(sql, function(error, result, fields) {
@@ -99,11 +114,11 @@ function fetchData(callback) {
   });
 }
 
-function fetchDataCollective(query, callback) {
-  executeQuery(query, function(result) {
-    callback(result);
-  });
-}
+
+
+
+
+
 
 
 app.get("/ret2", function(req, res) {
