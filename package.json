@@ -1,0 +1,22 @@
+{
+  "name": "nodesql",
+  "version": "1.0.0",
+  "description": "Node JS code to connect to mysql",
+  "main": "server.js",
+  "scripts": {
+    "start":"node server.js",
+    "test": "mocha server.js"
+  },
+  "keywords": [
+    "server.js",
+    "sql"
+  ],
+  "author": "Bishesh Shrestha",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "mysql": "^2.17.1"
+  }
+}

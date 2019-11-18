@@ -1,0 +1,67 @@
+body{
+    margin: 0; 
+    padding: 0;
+    text-align: center;
+    background: linear-gradient(rgba(0,0,50,0.5),rgba(0,0,50,0.5));
+    background-size: cover;
+    background-position: center;    
+    font-family: sans-serif;   
+}
+.banner{
+    margin-top: 100px;
+    color: #fff;
+    text-transform: capitalize;
+    
+}
+
+.banner h1{
+    color: #fff ;
+    transition: all 4s ease-in-out;
+}
+
+.customer-form {
+
+    color: #fff;    
+}
+form{
+    margin-top: 50px;
+    transition: all 4s ease-in-out;
+}
+.form-control{
+    width:600px;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid gray;
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 16px;
+
+}
+.form-control-submit {
+    color: #fff;
+    font-size: 18px;
+
+}
+.customer-form{
+    text-align: center;
+    padding-top: 150px;
+    padding-left: 300 px;
+    padding-bottom: 100 px;
+    
+}
+.row
+{
+    margin-top: 30px;
+
+}
+.col-md-6
+{
+    margin: 40px auto;
+
+}
+#dill {
+    color: white;
+    font-size: 18px;
+
+}

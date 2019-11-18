@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Customer Information</title>
+    </head>
+    <body>
+       <h1>Customer Information</h1>
+       <div id = 'dill3'></div>
+       <button type="button" onclick="retForm2()"> RETB </button>
+    	 
+<script>
+
+       function retForm3(){
+		
+		$.ajax({
+			url : "http://localhost:3000/ret3",
+			
+			type : "GET",
+			success : function(data){
+				testthis(data,function(datum){
+					document.getElementById("dill3").innerHTML = datum;
+				});
+				function testthis(data,callback){
+					var table = '<table style="width:100%"><tr><th>Name</th></tr>';
+					for (var i =0 ; i<data.length;i++){
+							table =  table + '<tr><td>'+data[i].Name+'</td> <td>'+data[i].balance+'</td> </tr>';
+							if(i==data.length-1){
+								table = table + '</table>'
+							}
+						
+					}
+					callback(table);
+				}
+			
+
+			}
+
+		})
+	}
+</script>
+
+       
+    </body>
+</html>
