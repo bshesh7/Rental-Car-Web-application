@@ -166,7 +166,7 @@
 	-->
 		<form method="POST">
 			Search Customer: <input id="customer_search" placeholder="Search Customer Name" type="text"/>
-    		<button type="button" onclick="retForm3()"> Search </button>
+    		<button type="button" onclick="retsearchuser()"> Search </button>
     	</form>
     	
     	<form method="GET">
@@ -230,7 +230,7 @@ function retsearchuser(){
 				
 			},
 			type : "POST",
-			success : function(){
+			success : function(data){
 				//console.log("Done");
 				
 				testthis(data,function(datum){
