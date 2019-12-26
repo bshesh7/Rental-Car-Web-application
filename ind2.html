@@ -76,9 +76,18 @@
                                         Customer Name: <input id="cname" placeholder="enter customer name" type="text"/><br><br>
                                         Customer Phone: <input id="cphone" placeholder="enter customer phone" type="text"/><br><br>
                                         <button type="button" onclick="submitForm()"> submit </button>
+									</form> 
+										<br>
+                                            <br>
+										RETURN Rental<br>
+										Search rental: <br><br>
+										CustName : <input id="_customer_name2" placeholder="enter customer name" type="text"/><br>  
+										Return Date: <input id="_return_date_search" placeholder="yyyy-mm-dd" type="text"/><br>
+										Vehicle ID: <input id="_VID_search" placeholder="yyyy-mm-dd" type="text"/><br>
+										<button onclick="return_rental_data()">Return</button>
+										<br>
                                             <br>
                                             <br>
-                                            
                                             <br>
                                             <br>
                                             <br>
@@ -87,15 +96,12 @@
                                             <br>
                                             <br>
                                             <br>
-                                            <br>
-                                            <br>
-                                            <br>
-                                    </form>
+                                    
 
                                 </div>
                       </div>
 
-                      <div class="carousel-item">
+    <div class="carousel-item">
                         
     <!-- Adding Vehicle-->
    
@@ -132,13 +138,87 @@
                          <br>
                  </form>
              </div>    
-                     </div>
+        </div>
 
-                      <div class="carousel-item">
-                        <img src="img/banner3.gif" class="d-block w-100" height= "600px">
+        <div class="carousel-item">
+							
+			<div class="customer-form">
+						<!--<img src="img/banner3.gif" class="d-block w-100" height= "600px">
+						-->
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						
+
                         <div class="carousel-caption">
-                                <h5>Created by Bishesh Shrestha and Roshan Shrestha</h5>
-                        </div>
+							<br>
+							<br>
+							<h1>Add a Rental</h1>
+							<br>
+							<br>Type of Vehicle:<select name="type" id="rentype">
+									<!--  COMPACT, MEDIUM, LARGE, SUV (Sports Utility Vehicle), TRUCK and VAN-->
+									<option value="1">COMPACT</option>
+									<option value="2">MEDIUM</option>
+									<option value="3">LARGE</option>
+									<option value="4">SUV</option>
+									<option value="5">TRUCK</option>
+									<option value="6">VAN</option>
+								</select>
+							<br>
+							<br>
+							Category :<select name="category" id="rencat">
+									<option value="0">BASIC</option>
+									<option value="1">LUXURY</option>
+							</select>
+							<br>
+							<br>
+							Start rental date: <input type="text" placeholder="yyyy-mm-dd" id="startdate">							
+							<br>
+							<br>
+							Return rental date: <input type="text" placeholder="yyyy-mm-dd" id="returndate">
+							<br>
+							<br>
+							<button onclick="retsearchvehicle_rental()">SEARCH VEHICLE</button>
+							<br>
+							<br>
+							<form method="POST">
+							Enter CustID : <input type="text" id="renter_customer" placeholder="xxx">
+							<br>
+							<br>
+							Vehicle ID : <input type="text" id="renter_vehicle" placeholder="xxx">
+							<br>
+							<br>		
+							Payment Date :<select name="paymentdate" id="payid">
+									<option value="0">Start Date</option>
+									<option value="1">Return Date</option>
+							</select>
+							<br>
+							<br>
+							<button onclick="addrental()">Rent</button>
+							</form>>
+						</div>
+					
+					
+					</div>	
                       </div>
                     </div>
                     <a class="carousel-control-prev" href="#headerSlider" role="button" data-slide="prev">
@@ -165,14 +245,22 @@
 		<br>
 	-->
 		<form method="POST">
-			Search Customer: <input id="customer_search" placeholder="Search Customer Name" type="text"/>
+			Search Customer by Name: <input id="customer_search" placeholder="Search Customer Name" type="text"/>
     		<button type="button" onclick="retsearchuser()"> Search </button>
     	</form>
-    	
-    	<form method="GET">
-			Search Vehicle: <input id="vehicle_search" placeholder="Search Vehicle Description" type="text"/>
-    		<button type="button" onclick="retForm4()"> Search </button>
+		<!--id search cus-->	
+		<form method="POST">
+			Search Customer by ID: <input id="customer_search_2" placeholder="Search Customer ID" type="text"/>
+    		<button type="button" onclick="retsearchuserid()"> Search </button>
     	</form>
+    	<form method="POST">
+			Search Vehicle by Name: <input id="vehicle_search" placeholder="Search Vehicle Description" type="text"/>
+    		<button type="button" onclick="retsearchvehicle()"> Search </button>
+		</form>
+		<form method="POST">
+				Search Vehicle by ID: <input id="vehicle_id" placeholder="Search Vehicle Description" type="text"/>
+				<button type="button" onclick="retsearchvehicleid()"> Search </button>
+			</form>
 </div>
 		<div id = 'dill' ></div>
 
@@ -220,6 +308,60 @@ function submitForm2(){
 
 		})
 	}
+	function addrental(){
+		var renter_customer = $('#renter_customer').val();
+		var renter_vehicle = $('#renter_vehicle').val();
+		var _start_search = $('#startdate').val();
+		var payid = $('#payid').val();
+		var _return_search = $('#returndate').val();
+
+		if(payid == "0"){
+			var _odi_search = $('#startdate').val();
+		}
+		if(payid == "1"){
+			var _odi_search = $('#returndate').val();
+		}
+		
+		$.ajax({
+			url : "http://localhost:3000/saverental",
+			data : {
+				"renter_customer" : renter_customer,
+				"renter_vehicle" : renter_vehicle,
+				"_start_search" : _start_search,
+				"_return_search" : _return_search,
+				"_odi_search" : _odi_search,
+
+			},
+			type : "POST",
+			success : function(){
+				console.log("Done");
+			}
+
+		})
+	}
+	function return_rental_data(){
+	
+	var _customer_name2 = $('#_customer_name2').val();
+	var _return_date_search = $('#_return_date_search').val();
+	var _VID_search = $('#_VID_search').val();
+	
+
+	$.ajax({
+			url : "http://localhost:3000/retSelectRETURN",
+			data : {
+				"_VID_search" : _VID_search,
+				"_return_date_search" : _return_date_search,
+				"_customer_name2" : _customer_name2
+				
+			},
+			type : "POST",
+			success : function(){
+				console.log("Done");
+			}
+
+		})
+	}
+
 function retsearchuser(){
 	
 	var _customer_search = $('#customer_search').val();
@@ -237,9 +379,159 @@ function retsearchuser(){
 					document.getElementById("dill").innerHTML = datum;
 				});
 				function testthis(data,callback){
-					var table = '<table style="width:100%"><tr><th>CustID</th><th>CustName</th><th>CustPhone</th></tr>';
+					var table = '<table border="1" style="width:100%; color:white;" class="table table-dark"><tr><th>CustID</th><th>CustName</th><th>Balance</th></tr>';
 					for (var i =0 ; i<data.length;i++){
-							table =  table + '<tr><td>'+data[i].CustID+'</td><td>'+data[i].Name+'</td><td>'+data[i].Phone+'</td></tr>';
+							table =  table + '<tr><td>'+data[i].CustID+'</td><td>'+data[i].Name+'</td><td>$'+data[i].balance+'.00</td></tr>';
+							if(i==data.length-1){
+								table = table + '</table>'
+							}
+					}
+					callback(table);
+				}
+			
+
+			
+			}
+
+		})
+	}
+// Vehicle search new supports part of name
+function retsearchvehicle(){
+	
+	var _vehicle_search = $('#vehicle_search').val();
+	$.ajax({
+			url : "http://localhost:3000/retVehSelect",
+			data : {
+				"searchParamVEH" : _vehicle_search
+				
+			},
+			type : "POST",
+			success : function(data){
+				//console.log("Done");
+				
+				testthis(data,function(datum){
+					document.getElementById("dill").innerHTML = datum;
+				});
+				function testthis(data,callback){
+					
+					var table = '<table border="1" style="width:100%; color:white;" class="table table-dark"  ><tr><th>VIN</th><th>Description</th><th>Daily Price</th></tr>';
+					for (var i =0 ; i<data.length;i++){
+							table =  table + '<tr><td>'+data[i].VehicleID+'</td><td>'+data[i].Description+'</td><td>'+data[i].Daily+'</td></tr>';
+							if(i==data.length-1){
+								table = table + '</table>'
+							}
+					}
+					
+					callback(table);
+				}
+			
+
+			
+			}
+
+		})
+	}
+	function retsearchvehicleid(){
+	
+	var _vehicle_id = $('#vehicle_id').val();
+	$.ajax({
+			url : "http://localhost:3000/retVehSelectID",
+			data : {
+				"searchParamVEHID" : _vehicle_id
+				
+			},
+			type : "POST",
+			success : function(data){
+				//console.log("Done");
+				
+				testthis(data,function(datum){
+					document.getElementById("dill").innerHTML = datum;
+				});
+				function testthis(data,callback){
+					
+					var table = '<table border="1" style="width:100%; color:white;" class="table table-dark"  ><tr><th>VIN</th><th>Description</th><th>Daily Price</th></tr>';
+					for (var i =0 ; i<data.length;i++){
+							table =  table + '<tr><td>'+data[i].VehicleID+'</td><td>'+data[i].Description+'</td><td>'+data[i].Daily+'</td></tr>';
+							if(i==data.length-1){
+								table = table + '</table>'
+							}
+					}
+					
+					callback(table);
+				}
+			
+
+			
+			}
+
+		})
+	}
+//
+function retsearchvehicle_rental(){
+	
+	var _type_search = $('#rentype').val();
+	var _cat_search = $('#rencat').val();
+	var _start_search = $('#startdate').val();
+	var _return_search = $('#returndate').val();
+	$.ajax({
+			url : "http://localhost:3000/retVehSelectRENTAL",
+			data : {
+				"searchParamTYPE" : _type_search,
+				"searchParamCAT" : _cat_search,
+				"searchParamSTART" : _start_search,
+				"searchParamRETURN" : _return_search
+				
+			},
+			type : "POST",
+			success : function(data){
+				//console.log("Done");
+				
+				testthis(data,function(datum){
+					document.getElementById("dill").innerHTML = datum;
+				});
+				function testthis(data,callback){
+					
+					var table = '<table border="1" style="width:100%; color:white;" class="table table-dark"  ><tr><th>VIN</th><th>Description</th></tr>';
+					for (var i =0 ; i<data.length;i++){
+							table =  table + '<tr><td>'+data[i].VehicleID+'</td><td>'+data[i].Description+'</td></tr>';
+							if(i==data.length-1){
+								table = table + '</table>'
+							}
+					}
+					
+					callback(table);
+				}
+			
+
+			
+			}
+
+		})
+	}
+
+//
+
+	///////////////////////////////////////////////////////////////////////////
+function retsearchuserid(){
+	
+	var _customer_search_2 = $('#customer_search_2').val();
+	$.ajax({
+			url : "http://localhost:3000/retSelectid",
+			data : {
+				"searchParamid" : _customer_search_2
+				
+			},
+			type : "POST",
+			success : function(data){
+				//console.log("Done");
+				
+				testthis(data,function(datum){
+					document.getElementById("dill").innerHTML = datum;
+				});
+				function testthis(data,callback){
+					var table = '<table border="1" style="width:100%; color:white;" class="table table-dark"><tr><th>CustID</th><th>CustName</th><th>Balance</th></tr>';
+					for (var i =0 ; i<data.length;i++){
+							table =  table + '<tr><td>'+data[i].CustID+'</td><td>'+data[i].Name+'</td><td>$'+data[i].balance+'.00</td></tr>';
 							if(i==data.length-1){
 								table = table + '</table>'
 							}
@@ -254,8 +546,40 @@ function retsearchuser(){
 		})
 	}
 
+/////////////////////////////////////////////////////////////////////////////////
+
+
+////
 	// for customer
 	function retForm(){
+		
+		$.ajax({
+			url : "http://localhost:3000/ret",
+			
+			type : "GET",
+			success : function(data){
+				testthis(data,function(datum){
+					document.getElementById("dill").innerHTML = datum;
+				});
+				function testthis(data,callback){
+					var table = '<table border="1" style="width:100%; color:white;"><tr><th>CustID</th><th>CustName</th><th>CustPhone</th></tr>';
+					for (var i =0 ; i<data.length;i++){
+							table =  table + '<tr><td>'+data[i].CustID+'</td><td>'+data[i].Name+'</td><td>'+data[i].Phone+'</td></tr>';
+							if(i==data.length-1){
+								table = table + '</table>'
+							}
+					}
+					callback(table);
+				}
+			
+
+			}
+
+		})
+	}
+// for addinf rental
+
+function retFormren(){
 		
 		$.ajax({
 			url : "http://localhost:3000/ret",
@@ -281,6 +605,9 @@ function retsearchuser(){
 
 		})
 	}
+
+//
+
 	// for vehicle
 	function retForm2(){
 		
@@ -369,10 +696,12 @@ function retForm4(){
 							}
 						}
 						else if(_vehicle_search ==""){
+							
 							table =  table + '<tr><td>'+data[i].Description+'</td><td>'+"$"+data[i].Daily+'</td></tr>';
 							if(i==data.length-1){
 								table = table + '</table>'
 							}
+
 						}
 						
 					}
